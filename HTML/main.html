@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>BSED EXAM</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../CSS/MainStyle.css" />
+  </head>
+
+  <body>
+    <div class="whole-container">
+      <header>
+        <div class="header-buttons">
+          <button type="submit" onclick="logout()">LOGOUT</button>
+        </div>
+      </header>
+
+      <div class="body-container">
+        <h1 class="first-label label">WELCOME TO</h1>
+        <h1 class="second-label label">BSED MATHEMATICS</h1>
+        <h1 class="second-label label">ENTRANCE EXAM</h1>
+        <button class="take-exam" form="exam-form">TAKE THE EXAM</button>
+        <button class="exam-record" form="exam-record-form">EXAM RECORD</button>
+        <form action="exam-level1.html" id="exam-form"></form>
+        <form action="ExamRecord.html" id="exam-record-form"></form>
+      </div>
+    </div>
+    <script>
+      function logout() {
+        localStorage.removeItem("currentUserEmail");
+        window.location.href = "../index.html";
+      }
+    </script>
+  </body>
+</html>
