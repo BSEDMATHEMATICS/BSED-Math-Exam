@@ -87,7 +87,7 @@ $(document).ready(function () {
                   localStorage.getItem("currentAnswerName")
                 );
 
-                window.location.href = "Admin-answers.html";
+                window.location.href = "admin-answers.html";
               });
 
               parentItem.after(submenu);
