@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BSED ADMIN</title>
+    <link rel="stylesheet" type="text/css" href="../CSS/Admin-style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <header class="btn-header">
+      <button type="submit" onclick="logout()" class="logout-btn">
+        LOGOUT
+      </button>
+    </header>
+
+    <ul id="parent-list" class="no-bullet">
+      <li class="parent-item">Name 1</li>
+    </ul>
+
+    <div class="submenu-container">
+      <ul class="submenu">
+        <li class="submenu-item" data-value="test1">Data 1</li>
+      </ul>
+    </div>
+
+    <script>
+      function logout() {
+        localStorage.removeItem("currenUserEmail");
+        localStorage.removeItem("currentUserName");
+        localStorage.clear();
+
+        window.location.href = "../index.html";
+      }
+    </script>
+    <script
+      type="module"
+      src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"
+    ></script>
+    <script
+      type="module"
+      src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
+    ></script>
+    <script
+      type="module"
+      src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"
+    ></script>
+    <script type="module" src="../JS/Admin-script.js"></script>
+  </body>
+</html>
