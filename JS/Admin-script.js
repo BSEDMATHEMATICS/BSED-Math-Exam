@@ -1,3 +1,4 @@
+ 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import {
   getDatabase,
@@ -15,6 +16,7 @@ const firebaseConfig = {
   messagingSenderId: "992114594215",
   appId: "1:992114594215:web:7e841cf3ff189b67a4e682",
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
@@ -37,22 +39,54 @@ get(namesRef).then(function (snapshot) {
 
 let testID = "test";
 
+let currentUserEmail = ""; 
+let currentUserName = ""; 1
+
+function deleteRecord(recordId, event) {
+  event.preventDefault();
+
+  if (confirm("Are you sure you want to delete this record?")) {
+    
+
+    const recordRef = ref(db, `record/${currentUserEmail}/${recordId}`);
+    const answersRef = ref(db, `answers/${currentUserName}/${recordId}`);
+
+    remove(recordRef)
+      .then(() => {
+        remove(answersRef);
+        console.log("Record deleted successfully");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error deleting record:", error);
+      });
+  } else {
+    console.log("Deletion canceled");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .querySelector(".submenu-container ul")
+    .addEventListener("click", function (event) {
+      if (event.target.classList.contains("delete-btn")) {
+        const recordId = event.target.dataset.recordId;
+        deleteRecord(recordId, event);
+      }
+    });
+});
+
 $(document).ready(function () {
   $(document).on("click", ".parent-item", function () {
     var submenu = $(this).next(".submenu");
 
     if (submenu.length > 0) {
-      //   submenu.remove();
-      $(".submenu").remove();
+      submenu.remove();
     } else {
       $(".submenu").remove();
 
       const answersRef = ref(db, `answers/${$(this).text()}`);
-
-      console.log($(this).text());
       var userName = $(this).text();
-      console.log("userName: ", userName);
-
       var parentItem = $(this);
 
       get(answersRef).then(async function (snapshot) {
@@ -60,17 +94,15 @@ $(document).ready(function () {
 
         snapshot.forEach(function (childSnapshot) {
           const id = childSnapshot.key;
-          console.log("id: ", id);
 
           const promise = get(child(ref(db), `answers/${userName}/${id}`)).then(
             function (innerSnapshot) {
               const data = innerSnapshot.val();
 
-              console.log(data);
-
               submenu = $(`
                 <ul class="submenu">
-                    <li class="submenu-item" data-value="${data.id}">Level: ${data.examLevel} Score: ${data.score}</li>
+                    <li class="submenu-item" data-value="${data.id}" style="display: inline-block;">Level: ${data.examLevel} Score: ${data.score}</li>
+                    <li class="delete-btn" style="display: inline-block;" data-record-id="${data.id}">delete</li>
                 </ul>
                 `);
 
@@ -81,13 +113,14 @@ $(document).ready(function () {
                 localStorage.setItem("currentAnswerID", uniqueValue);
                 localStorage.setItem("currentAnswerName", userName);
 
-                console.log("id: ", localStorage.getItem("currentAnswerID"));
-                console.log(
-                  "name: ",
-                  localStorage.getItem("currentAnswerName")
-                );
-
                 window.location.href = "admin-answers.html";
+              });
+
+              submenu.find(".delete-btn").on("click", function (event) {
+                const recordId = $(this).data("record-id");
+                currentUserEmail = data.email;
+                currentUserName = userName;
+                deleteRecord(recordId, event);
               });
 
               parentItem.after(submenu);
@@ -102,3 +135,4 @@ $(document).ready(function () {
     }
   });
 });
+ 
