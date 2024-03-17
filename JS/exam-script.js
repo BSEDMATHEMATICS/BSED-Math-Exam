@@ -190,6 +190,7 @@ questionsModule.then((module) => {
       answerSheet: answerSheet,
       score: score + "/" + questions.length,
       userName: currentUserName,
+      email: currentUserEmail,
     });
   }
 });
