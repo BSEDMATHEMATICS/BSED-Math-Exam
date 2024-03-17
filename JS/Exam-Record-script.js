@@ -74,7 +74,7 @@ if (currentUserEmail) {
             <td>${record.score}</td>
             <td>${record.grade}</td>
             <td>${record.dateTaken}</td>
-            <td><button style='display: block;' class="delete-btn" data-record-id="${record.id}" onclick="deleteRecord('${record.id}', event)">Delete</button>
+       //     <td><button style='display: block;' class="delete-btn" data-record-id="${record.id}" onclick="deleteRecord('${record.id}', event)">Delete</button>
             </td>
           `;
           console.log(record.id);
