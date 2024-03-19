@@ -122,7 +122,7 @@ questionsModule.then((module) => {
       questionElement.innerHTML = `CONGRATULATIONS YOU PASSED THE EXAM! <br> You scored ${score} out of ${questions.length}!`;
       nextLevelButton.style.display = "block";
       grade = "Passed";
-    } else if (score >= 50 && examLevel === "3") {
+    } else if (score >= 1 && examLevel == "3") {
       questionElement.innerHTML = `CONGRATULATIONS YOU PASSED THE EXAM! <br> You scored ${score} out of ${questions.length}!`;
       nextLevelButton.style.display = "block";
       grade = "Passed";
