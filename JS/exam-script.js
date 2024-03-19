@@ -132,6 +132,9 @@ questionsModule.then((module) => {
       nextButton.style.display = "block";
       grade = "Failed";
     }
+    console.log("test test");
+    console.log("examLevel");
+    
     insertData();
   }
 
