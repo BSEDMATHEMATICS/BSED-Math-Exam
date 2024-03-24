@@ -305,7 +305,7 @@ const questions = [
     ],
   },
   {
-    question: "25. Which of the following defines a vector space?",
+    question: "25. Which of the following best describes a vector space?",
     answers: [
       { text: "a. A set of vectors with different dimensions", correct: false },
       { text: "b. A set of vectors with the same magnitude", correct: false },
@@ -559,14 +559,14 @@ const questions = [
   },
   {
     question:
-      "43. What is the role of a teacher in selecting appropriate methods and techniques for teaching mathematics?",
+      "43. What part does the teacher play in helping students learn mathematics by using proper methods and techniques?",
     answers: [
       {
-        text: "a. To follow a specific set of rules and guidelines for teaching mathematics",
+        text: "a. To strictly adhere to a predefined set of rules and guidelines for teaching mathematics",
         correct: false,
       },
       {
-        text: "b. To choose methods that are most convenient for the teacher",
+        text: "b. To prioritize methods that are most convenient for the teacher",
         correct: false,
       },
       {
@@ -574,7 +574,7 @@ const questions = [
         correct: true,
       },
       {
-        text: "d. To focus only on traditional teaching methods",
+        text: "d. To exclusively focus only on traditional teaching methods",
         correct: false,
       },
     ],

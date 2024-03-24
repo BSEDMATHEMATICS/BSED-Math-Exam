@@ -118,8 +118,8 @@ const questions = [
     answers: [
       { text: "a. ½", correct: false },
       { text: "b. ⅓", correct: false },
-      { text: "c. 5/14", correct: true },
-      { text: "d. 2/9", correct: false },
+      { text: "c. ¼", correct: true },
+      { text: "d. ⅕", correct: false },
     ],
   },
 
@@ -158,12 +158,12 @@ const questions = [
   },
 
   {
-    question: "15. Evaluate the integral ∫(2x cos²(x²) dx.",
+    question: "15. Evaluate the integral ∫(2x cos²(x) dx.",
     answers: [
-      { text: "a. x sin²(x²) + C", correct: false },
-      { text: "b. sin²(x²) + C", correct: false },
-      { text: "c. x² sin(x²) + C", correct: true },
-      { text: "d. 2x sin(x²) + C", correct: false },
+      { text: "a. x sin²(x) + C", correct: true },
+      { text: "b. sin²(x) + C", correct: false },
+      { text: "c. x² sin(x) + C", correct: false },
+      { text: "d. 2x sin(x) + C", correct: false },
     ],
   },
   {
@@ -178,7 +178,7 @@ const questions = [
   },
 
   {
-    question: "17. Evaluate the integral ∫(1 / (1 + tan(x)) dx.",
+    question: "17. Evaluate the integral ∫(1 / (cos(x)+1) dx.",
     answers: [
       { text: "a. ln|cos(x)| + C", correct: false },
       { text: "b. ln|sin(x)| + C", correct: false },
@@ -553,9 +553,9 @@ const questions = [
   },
   {
     question:
-      "44. What is the purpose of pilot testing an instrument during the preparation phase of research?",
+      "44. What is the purpose of pilot testing an instrument before conducting the main study?",
     answers: [
-      { text: "a. To gather preliminary data for analysis", correct: false },
+      { text: "a. To collect preliminary data for analysis", correct: false },
       {
         text: "b. To validate the reliability and validity of the instrument",
         correct: false,

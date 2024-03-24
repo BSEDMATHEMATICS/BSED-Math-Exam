@@ -890,12 +890,12 @@ const questions = [
   },
   {
     question:
-      "52. Consider the region R bounded by the curves y = x² and y = 4x in the xy-plane. Evaluate the double integral ∬R (x + y) dA, where dA represents the differential area element.",
+      "52. Find the double integral ∫∫R (2x+3y)dA, Where R is the region bounded by the curves y=x and y=2x² in the xy-plane.",
     answers: [
-      { text: "a. ⅔", correct: false },
-      { text: "b. ⅓", correct: false },
-      { text: "c. 8", correct: false },
-      { text: "d. 16", correct: true },
+      { text: "a. 3/2", correct: false },
+      { text: "b. 5/2", correct: true },
+      { text: "c. 6/2", correct: false },
+      { text: "d. 11/2", correct: false },
     ],
   },
   {
@@ -910,7 +910,7 @@ const questions = [
   },
   {
     question:
-      "54. Conisder the regions S defined by the inequalities z ≥ 0 and x² + y² ≤ 4. What is the interpretation of hte triple integral ∭szdV?",
+      "54. Consider the regions S defined by the inequalities z ≥ 0 and x² + y² ≤ 4. What is the interpretation of hte triple integral ∭szdV?",
     answers: [
       {
         text: "a. The volume of the solid region S above the xy-plane",
@@ -925,12 +925,19 @@ const questions = [
     ],
   },
   {
-    question: "55. What does the triple integral ∭V f(x, y, z) dV represent?",
+    question:
+      "55. Cibsuder a solid region V defined by the inequalites z ≥ 0 and x² + y² ≤ 9. What is the interpretation of hte triple integral ∭szdV?",
     answers: [
-      { text: "a. The volume of the region V", correct: false },
-      { text: "b. The surface area of the region V", correct: false },
-      { text: "c. The mass of the region V", correct: true },
-      { text: "d. The density of the region V", correct: false },
+      {
+        text: "a. The volume of the region V above the xy-plane",
+        correct: true,
+      },
+      {
+        text: "b. The volume of the solid region V below the xy-plane",
+        correct: false,
+      },
+      { text: "c. The average value of z over the region V", correct: false },
+      { text: "d. The centroid of the region V", correct: false },
     ],
   },
   {
@@ -1018,12 +1025,12 @@ const questions = [
   },
   {
     question:
-      "63. Which concept states that for any distribution, regardless of its shape, a certain percentage of data falls within a specified number of standard deviations from the mean?",
+      "63. What is the name of the rule that states that in any distribution, most of the data is clustered around the mean, with some percentage falling within one, two, and three standard deviations from the mean?",
     answers: [
       { text: "a. Standard Score", correct: false },
       { text: "b. Normal Curve", correct: false },
       { text: "c. Empirical Rule", correct: true },
-      { text: "d. Chebyshev’s Theorem", correct: false },
+      { text: "d. Chebyshev's Theorem", correct: false },
     ],
   },
   {
@@ -1164,15 +1171,21 @@ const questions = [
       "75. Which of the following statements accurately defines a prime number?",
     answers: [
       {
-        text: "a. A number with exactly two distinct positive divisors",
+        text: "a. A number that is divisible by 1 and itself only.",
         correct: true,
       },
-      { text: "b. A number divisible by 1 and itself", correct: false },
       {
-        text: "c. A number with no positive divisors other than 1 and itself",
+        text: "b. A number that is divisible by 1 and any other number.",
         correct: false,
       },
-      { text: "d. A number with an even number of divisors", correct: false },
+      {
+        text: "c. A number that is divisible by 2 and itself only.",
+        correct: false,
+      },
+      {
+        text: "d. A number that is divisible by 2 and any other number.",
+        correct: false,
+      },
     ],
   },
   {
@@ -1209,12 +1222,12 @@ const questions = [
   },
   {
     question:
-      "78. When solving a system of linear equations, what does it mean if the coefficient matrix reduces to an identity matrix?",
+      "78. What does it indicate when the coefficient matrix of a system of linear equations reduces to an identity matrix?",
     answers: [
-      { text: "a. The system has infinitely many solutions.", correct: false },
-      { text: "b. The system has no solutions.", correct: false },
-      { text: "c. The system has a unique solution.", correct: true },
-      { text: "d. The system is inconsistent.", correct: false },
+      { text: "a. It has infinitely many solutions.", correct: false },
+      { text: "b. It has no solutions.", correct: false },
+      { text: "c. It has a unique solution.", correct: true },
+      { text: "d. It is inconsistent.", correct: false },
     ],
   },
   {
@@ -1271,12 +1284,12 @@ const questions = [
   },
   {
     question:
-      "84. By analyzing the expression 4x² - 9y², it can be identified as a difference of squares. Which factors can be obtained by factoring in this expression?",
+      "84. By analyzing the expression 9a°+16b2, Which of the following is obtained by factoring this expression?",
     answers: [
-      { text: "a. (2x + 3y)(2x - 3y)", correct: true },
-      { text: "b. 2x + 3y)²", correct: false },
-      { text: "c. (2x - 3y)²", correct: false },
-      { text: "d. (2x² + 3y²)", correct: false },
+      { text: "a. (3a+4b)(3a-4b)", correct: true },
+      { text: "b. (3a+4b)²", correct: false },
+      { text: "c. (3a-4b)²", correct: false },
+      { text: "d. 9a²+16b²", correct: false },
     ],
   },
 
@@ -1366,12 +1379,12 @@ const questions = [
 
   {
     question:
-      "93. A regular hexagon with a side length of 6 cm is inscribed in a circle. What is the area of the circle?",
+      "93. Find the are of a regular hexagon given that each side measures 6 cm?",
     answers: [
-      { text: "a. 36π cm²", correct: false },
-      { text: "b. 72π cm²", correct: false },
-      { text: "c. 108π cm²", correct: true },
-      { text: "d. 216π cm²", correct: false },
+      { text: "a. 52 cm°", correct: false },
+      { text: "b. 53√2 cm²", correct: false },
+      { text: "c. 54√3 cm²", correct: true },
+      { text: "d. 55 cm²", correct: false },
     ],
   },
   {
