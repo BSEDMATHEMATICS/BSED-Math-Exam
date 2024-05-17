@@ -81,7 +81,11 @@ questionsModule.then((module) => {
       clearInterval(timer);
     }
 
-    timeLeft = 60;
+    if (examLevel === "3") {
+      timeLeft = 60;
+    } else {
+      timeLeft = 30;
+    }
     updateTimerDisplay(timeLeft);
 
     timer = setInterval(() => {

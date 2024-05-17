@@ -17,37 +17,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-//
-
 const totalExam = document.getElementById("total-exam");
 const totalPassed = document.getElementById("passed-exam");
 const totalFailed = document.getElementById("failed-exam");
-const level1Ranking = document.getElementById("level-1-ranking");
-const level2Ranking = document.getElementById("level-2-ranking");
-const level3Ranking = document.getElementById("level-3-ranking");
 const overallRanking = document.getElementById("overall-ranking");
 
+// const level1Ranking = document.getElementById("level-1-ranking");
+// const level2Ranking = document.getElementById("level-2-ranking");
+// const level3Ranking = document.getElementById("level-3-ranking");
+
 const overallPieChartCtx = document
-  .getElementById("overall-pie-chart")
-  .getContext("2d");
-const level1PieChartCtx = document
-  .getElementById("level1-pie-chart")
-  .getContext("2d");
-const level2PieChartCtx = document
-  .getElementById("level2-pie-chart")
-  .getContext("2d");
-const level3PieChartCtx = document
-  .getElementById("level3-pie-chart")
-  .getContext("2d");
-const overallPieChartCtx1 = document
-  .getElementById("overall1-pie-chart")
+  .getElementById("level1-3-pie-chart")
   .getContext("2d");
 
-let overallPieChart,
-  level1PieChart,
-  level2PieChart,
-  level3PieChart,
-  overallPieChart1;
+let overallPieChart;
 
 async function getUsersMap() {
   try {
@@ -57,7 +40,7 @@ async function getUsersMap() {
 
     if (users) {
       Object.entries(users).forEach(([email, userData]) => {
-        usersMap[email] = userData.fullName;
+        usersMap[email.replace(/\./g, "_")] = userData.fullName;
       });
     }
     return usersMap;
@@ -79,47 +62,53 @@ async function calculateCountersAndRankings() {
     let passed = 0;
     let failed = 0;
 
-    let level1Scores = [];
-    let level2Scores = [];
-    let level3Scores = [];
-    let overallScores = [];
-
     let level1Passed = 0;
-    let level1Failed = 0;
     let level2Passed = 0;
-    let level2Failed = 0;
     let level3Passed = 0;
-    let level3Failed = 0;
+
+    let overallScores = [];
+    const firstTakeTracker = {};
 
     Object.entries(records).forEach(([email, exams]) => {
+      if (!firstTakeTracker[email]) {
+        firstTakeTracker[email] = {};
+      }
+
       Object.values(exams).forEach((exam) => {
         total++;
         const score = parseInt(exam.score.split("/")[0]);
 
         if (exam.grade === "Passed") {
           passed++;
-          overallScores.push({ fullName: usersMap[email], score });
 
-          if (exam.examLevel === "1") {
-            level1Scores.push({ fullName: usersMap[email], score });
-            level1Passed++;
-          } else if (exam.examLevel === "2") {
-            level2Scores.push({ fullName: usersMap[email], score });
-            level2Passed++;
-          } else if (exam.examLevel === "3") {
-            level3Scores.push({ fullName: usersMap[email], score });
-            level3Passed++;
+          if (!firstTakeTracker[email][exam.examLevel]) {
+            firstTakeTracker[email][exam.examLevel] = { score, exam, email };
+
+            if (exam.examLevel === "1") {
+              level1Passed++;
+            } else if (exam.examLevel === "2") {
+              level2Passed++;
+            } else if (exam.examLevel === "3") {
+              level3Passed++;
+            }
+          } else {
+            if (score > firstTakeTracker[email][exam.examLevel].score) {
+              firstTakeTracker[email][exam.examLevel] = { score, exam, email };
+            }
           }
-        } else if (exam.grade === "Failed") {
+        } else {
           failed++;
-          if (exam.examLevel === "1") {
-            level1Failed++;
-          } else if (exam.examLevel === "2") {
-            level2Failed++;
-          } else if (exam.examLevel === "3") {
-            level3Failed++;
-          }
         }
+      });
+    });
+
+    Object.values(firstTakeTracker).forEach((levels) => {
+      Object.values(levels).forEach(({ score, exam, email }) => {
+        overallScores.push({
+          fullName: usersMap[email],
+          score,
+          examLevel: exam.examLevel,
+        });
       });
     });
 
@@ -127,46 +116,19 @@ async function calculateCountersAndRankings() {
     totalPassed.textContent = passed;
     totalFailed.textContent = failed;
 
-    updateRankingList(level1Scores, level1Ranking);
-    updateRankingList(level2Scores, level2Ranking);
-    updateRankingList(level3Scores, level3Ranking);
+    // level1Ranking.textContent = level1Passed;
+    // level2Ranking.textContent = level2Passed;
+    // level3Ranking.textContent = level3Passed;
+
+    const data = [level1Passed, level2Passed, level3Passed];
+
     updateRankingList(overallScores, overallRanking);
 
-    updatePieChart(
-      overallPieChart,
-      overallPieChartCtx,
-      passed,
-      failed,
-      "Overall"
-    );
-    updatePieChart(
-      level1PieChart,
-      level1PieChartCtx,
-      level1Passed,
-      level1Failed,
-      "Level 1"
-    );
-    updatePieChart(
-      level2PieChart,
-      level2PieChartCtx,
-      level2Passed,
-      level2Failed,
-      "Level 2"
-    );
-    updatePieChart(
-      level3PieChart,
-      level3PieChartCtx,
-      level3Passed,
-      level3Failed,
-      "Level 3"
-    );
-    updatePieChart(
-      overallPieChart1,
-      overallPieChartCtx1,
-      passed,
-      failed,
-      "Overall"
-    );
+    updatePieChart(overallPieChart, overallPieChartCtx, data, [
+      "Level 1",
+      "Level 2",
+      "Level 3",
+    ]);
   } catch (error) {
     console.error("Error retrieving data:", error);
   }
@@ -178,23 +140,26 @@ function updateRankingList(scores, rankingElement) {
 
   scores.forEach((user, index) => {
     const listItem = document.createElement("li");
-    listItem.textContent = `${index + 1}. ${user.fullName} - ${user.score}`;
+    listItem.textContent = `${index + 1}. (Level ${user.examLevel}) ${
+      user.fullName
+    } - ${user.score} `;
     rankingElement.appendChild(listItem);
   });
 }
 
-function updatePieChart(chart, context, passed, failed, label) {
+function updatePieChart(chart, context, data, labels) {
   if (chart) {
     chart.destroy();
   }
   chart = new Chart(context, {
     type: "pie",
     data: {
-      labels: ["Passed", "Failed"],
+      labels: labels,
       datasets: [
         {
-          data: [passed, failed],
-          backgroundColor: ["#9aeabc", "#ff9393"],
+          label: "Passed",
+          data: data,
+          backgroundColor: ["#ff7373", "#2757da", "#35bb23"],
         },
       ],
     },
@@ -206,7 +171,7 @@ function updatePieChart(chart, context, passed, failed, label) {
         },
         title: {
           display: true,
-          text: `${label} Exam Results`,
+          text: "Passed",
         },
       },
     },

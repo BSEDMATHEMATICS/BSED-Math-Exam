@@ -14,43 +14,32 @@ header {
 .btn-back {
   background-color: #ff9393;
   color: #000;
-  margin: 1rem;
-  padding: 1rem;
+  margin: 0.5rem;
+  padding: 0.7rem;
   color: #fff;
   border-radius: 20px;
   cursor: pointer;
-  border: none;
   font-size: 1rem;
 }
 
 .summary-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.summary-container .container-1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-}
-
-.summary-container .container-1 .summary-content {
+.summary-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40%;
-  font-size: 1.5rem;
+  width: 15%;
+  font-size: 1rem;
   background-color: #a799a8;
-  margin: 0 10px;
   padding: 10px;
   border-radius: 10px;
   color: white;
-  margin: 20px;
 }
 
 .main-container {
@@ -60,21 +49,19 @@ header {
 }
 
 .ranking-container {
-  width: 100%;
+  width: 55%;
 }
 
 .ranking-content {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: #fff;
-  margin: 20px;
+  margin: 20px 0;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.ranking-content .container-2 {
-  width: 50%;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .ranking-content label {
@@ -93,15 +80,19 @@ header {
 }
 
 .chart-container {
-  width: 55%;
+  width: 40%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+  max-height: 400px;
+  background-color: #fff;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .chart-container canvas {
-  width: 45%;
-  height: 300px;
-  margin-bottom: 20px;
+  width: 200px;
+  height: auto;
 }

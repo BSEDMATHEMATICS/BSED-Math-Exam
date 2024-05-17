@@ -19,66 +19,33 @@
     </header>
 
     <div class="summary-container">
-      <div class="container-1">
-        <div class="summary-content">
-          <label for="summary-content">Total: </label>
-          <label for="summary-content" id="total-exam">0</label>
-        </div>
-        <div class="summary-content" style="background-color: #9aeabc">
-          <label for="summary-content">Passed: </label>
-          <label for="summary-content" id="passed-exam">0</label>
-        </div>
-        <div class="summary-content" style="background-color: #ff9393">
-          <label for="summary-content">Failed: </label>
-          <label for="summary-content" id="failed-exam">0</label>
+      <div class="summary-content" style="background-color: #2757da">
+        <label>Total: </label>
+        <label id="total-exam">0</label>
+      </div>
+      <div
+        class="summary-content"
+        style="background-color: #35bb23;"
+      >
+        <label>Passed: </label>
+        <label id="passed-exam">0</label>
+      </div>
+      <div class="summary-content" style="background-color: #ff7373">
+        <label>Failed: </label>
+        <label id="failed-exam">0</label>
+      </div>
+    </div>
+
+    <div class="main-container">
+      <div class="ranking-container">
+        <div class="ranking-content">
+          <label for="ranking-content">Overall Ranking: </label>
+          <ul id="overall-ranking"></ul>
         </div>
       </div>
 
       <div class="chart-container">
-        <canvas id="overall-pie-chart"></canvas>
-      </div>
-    </div>
-
-    <div class="ranking-container">
-      <div class="ranking-content">
-        <div class="container-2">
-          <label for="ranking-content">Level 1 Ranking: </label>
-          <ul id="level-1-ranking"></ul>
-        </div>
-
-        <div class="chart-container">
-          <canvas id="level1-pie-chart"></canvas>
-        </div>
-      </div>
-      <div class="ranking-content">
-        <div class="container-2">
-          <label for="ranking-content">Level 2 Ranking: </label>
-          <ul id="level-2-ranking"></ul>
-        </div>
-
-        <div class="chart-container">
-          <canvas id="level2-pie-chart"></canvas>
-        </div>
-      </div>
-      <div class="ranking-content">
-        <div class="container-2">
-          <label for="ranking-content">Level 3 Ranking: </label>
-          <ul id="level-3-ranking"></ul>
-        </div>
-
-        <div class="chart-container">
-          <canvas id="level3-pie-chart"></canvas>
-        </div>
-      </div>
-      <div class="ranking-content">
-        <div class="container-2">
-          <label for="ranking-content">Overall Ranking: </label>
-          <ul id="overall-ranking"></ul>
-        </div>
-
-        <div class="chart-container">
-          <canvas id="overall1-pie-chart"></canvas>
-        </div>
+        <canvas id="level1-3-pie-chart"></canvas>
       </div>
     </div>
 
