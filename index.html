@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BSED EXAM</title>
+    <link rel="stylesheet" type="text/css" href="CSS/LoginRegisterStyle.css" />
+  </head>
+
+  <body>
+    <h2 class="header">BSED MATHEMATICS Qualifying Exam</h2>
+    <br />
+    <div class="form-container">
+      <div class="form">
+        <h2>LOGIN</h2>
+
+        <form id="login-form">
+          <div class="input-group">
+            <input
+              type="text"
+              placeholder="Email or Username"
+              name="email"
+              id="email"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              id="password"
+              required
+            />
+          </div>
+
+          <button class="first-btn" id="login-btn" type="submit">Login</button>
+          <button class="first-btn" id="login-as-admin-btn" type="submit">
+            Login as Admin
+          </button>
+        </form>
+
+        <form action="HTML/signup.html">
+          <button class="second-btn">Sign Up</button>
+        </form>
+      </div>
+    </div>
+    <script
+      type="module"
+      src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"
+    ></script>
+    <script
+      type="module"
+      src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
+    ></script>
+    <script
+      type="module"
+      src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"
+    ></script>
+    <script type="module" src="JS/Login-script.js"></script>
+  </body>
+</html>

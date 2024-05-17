@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  background-position: center;
+
+  flex-direction: column;
+  text-align: center;
+  background-image: url("../Media/bg3.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: purple;
+}
+
+.form-container {
+  max-width: 400px;
+  width: 90%;
+  padding: 50px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff00;
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
+  box-shadow: 0px 0px 10px 0px #33333331;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.form-container .form {
+  text-align: center;
+}
+
+.form-container .form h2 {
+  margin-bottom: 40px;
+  font-size: 1.5rem;
+  color: purple;
+}
+
+.form-container .form .input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid purple;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.form-container .form .input-group input {
+  width: 20rem;
+  border: 0;
+  outline: none;
+  padding: 10px;
+  color: purple;
+  background: yellow;
+}
+
+.form-container .form .input-group input::placeholder {
+  color: purple;
+}
+
+.form-container .form .first-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 0;
+  outline: none;
+  margin-bottom: 20px;
+  background: purple;
+  color: #fff;
+  cursor: pointer;
+}
+
+.second-btn {
+  color: purple;
+  background: none;
+  border: none;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.header {
+  font-size: 2rem;
+  color: yellow;
+  text-shadow: 5px 5px 5px purple;
+}
+
+@media screen and (max-width: 768px) {
+  .form-container {
+    max-width: 95%;
+  }
+
+  .form-container .form h2 {
+    font-size: 1.2rem;
+  }
+}
