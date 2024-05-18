@@ -20,11 +20,7 @@ const db = getDatabase(app);
 const totalExam = document.getElementById("total-exam");
 const totalPassed = document.getElementById("passed-exam");
 const totalFailed = document.getElementById("failed-exam");
-const overallRanking = document.getElementById("overall-ranking");
-
-// const level1Ranking = document.getElementById("level-1-ranking");
-// const level2Ranking = document.getElementById("level-2-ranking");
-// const level3Ranking = document.getElementById("level-3-ranking");
+const rankingList = document.getElementById("ranking-list");
 
 const overallPieChartCtx = document
   .getElementById("level1-3-pie-chart")
@@ -67,6 +63,9 @@ async function calculateCountersAndRankings() {
     let level3Passed = 0;
 
     let overallScores = [];
+    let level1Scores = [];
+    let level2Scores = [];
+    let level3Scores = [];
     const firstTakeTracker = {};
 
     Object.entries(records).forEach(([email, exams]) => {
@@ -74,16 +73,20 @@ async function calculateCountersAndRankings() {
         firstTakeTracker[email] = {};
       }
 
-      Object.values(exams).forEach((exam) => {
+      Object.entries(exams).forEach(([timestamp, exam]) => {
         total++;
         const score = parseInt(exam.score.split("/")[0]);
 
-        if (exam.grade === "Passed") {
-          passed++;
+        if (!firstTakeTracker[email][exam.examLevel]) {
+          firstTakeTracker[email][exam.examLevel] = {
+            score,
+            exam,
+            email,
+            timestamp,
+          };
 
-          if (!firstTakeTracker[email][exam.examLevel]) {
-            firstTakeTracker[email][exam.examLevel] = { score, exam, email };
-
+          if (exam.grade === "Passed") {
+            passed++;
             if (exam.examLevel === "1") {
               level1Passed++;
             } else if (exam.examLevel === "2") {
@@ -92,23 +95,36 @@ async function calculateCountersAndRankings() {
               level3Passed++;
             }
           } else {
-            if (score > firstTakeTracker[email][exam.examLevel].score) {
-              firstTakeTracker[email][exam.examLevel] = { score, exam, email };
-            }
+            failed++;
           }
         } else {
-          failed++;
+          if (timestamp < firstTakeTracker[email][exam.examLevel].timestamp) {
+            firstTakeTracker[email][exam.examLevel] = {
+              score,
+              exam,
+              email,
+              timestamp,
+            };
+          }
         }
       });
     });
 
     Object.values(firstTakeTracker).forEach((levels) => {
       Object.values(levels).forEach(({ score, exam, email }) => {
-        overallScores.push({
+        const userData = {
           fullName: usersMap[email],
           score,
           examLevel: exam.examLevel,
-        });
+        };
+        overallScores.push(userData);
+        if (exam.examLevel === "1") {
+          level1Scores.push(userData);
+        } else if (exam.examLevel === "2") {
+          level2Scores.push(userData);
+        } else if (exam.examLevel === "3") {
+          level3Scores.push(userData);
+        }
       });
     });
 
@@ -116,13 +132,29 @@ async function calculateCountersAndRankings() {
     totalPassed.textContent = passed;
     totalFailed.textContent = failed;
 
-    // level1Ranking.textContent = level1Passed;
-    // level2Ranking.textContent = level2Passed;
-    // level3Ranking.textContent = level3Passed;
+    const totalPassedLevels = level1Passed + level2Passed + level3Passed;
 
-    const data = [level1Passed, level2Passed, level3Passed];
+    const level1Percentage = (level1Passed / totalPassedLevels) * 100;
+    const level2Percentage = (level2Passed / totalPassedLevels) * 100;
+    const level3Percentage = (level3Passed / totalPassedLevels) * 100;
 
-    updateRankingList(overallScores, overallRanking);
+    const data = [level1Percentage, level2Percentage, level3Percentage];
+
+    const rankingData = {
+      overall: overallScores,
+      level1: level1Scores,
+      level2: level2Scores,
+      level3: level3Scores,
+    };
+
+    const radios = document.querySelectorAll('input[name="ranking"]');
+    radios.forEach((radio) => {
+      radio.addEventListener("change", (event) => {
+        updateRankingList(rankingData[event.target.value], rankingList);
+      });
+    });
+
+    updateRankingList(overallScores, rankingList);
 
     updatePieChart(overallPieChart, overallPieChartCtx, data, [
       "Level 1",
@@ -142,7 +174,7 @@ function updateRankingList(scores, rankingElement) {
     const listItem = document.createElement("li");
     listItem.textContent = `${index + 1}. (Level ${user.examLevel}) ${
       user.fullName
-    } - ${user.score} `;
+    } - ${user.score}`;
     rankingElement.appendChild(listItem);
   });
 }
@@ -171,7 +203,16 @@ function updatePieChart(chart, context, data, labels) {
         },
         title: {
           display: true,
-          text: "Passed",
+          text: "Percentage of Passed Exams by Level",
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              const label = context.label || "";
+              const value = context.raw !== undefined ? context.raw.toFixed(2) : "";
+              return `${label}: ${value}%`;
+            },
+          },
         },
       },
     },

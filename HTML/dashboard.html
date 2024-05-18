@@ -23,10 +23,7 @@
         <label>Total: </label>
         <label id="total-exam">0</label>
       </div>
-      <div
-        class="summary-content"
-        style="background-color: #35bb23;"
-      >
+      <div class="summary-content" style="background-color: #35bb23">
         <label>Passed: </label>
         <label id="passed-exam">0</label>
       </div>
@@ -39,8 +36,24 @@
     <div class="main-container">
       <div class="ranking-container">
         <div class="ranking-content">
-          <label for="ranking-content">Overall Ranking: </label>
-          <ul id="overall-ranking"></ul>
+          <label for="ranking-content">Ranking: </label>
+          <div class="ranking-toggle">
+            <input
+              type="radio"
+              id="overall"
+              name="ranking"
+              value="overall"
+              checked
+            />
+            <label for="overall">Overall</label>
+            <input type="radio" id="level1" name="ranking" value="level1" />
+            <label for="level1">Level 1</label>
+            <input type="radio" id="level2" name="ranking" value="level2" />
+            <label for="level2">Level 2</label>
+            <input type="radio" id="level3" name="ranking" value="level3" />
+            <label for="level3">Level 3</label>
+          </div>
+          <ul id="ranking-list"></ul>
         </div>
       </div>
 
@@ -68,6 +81,15 @@
       back = () => {
         window.location.href = "./admin.html";
       };
+    </script>
+
+    <script>
+      var loggedIn = localStorage.getItem("loggedIn");
+
+      if (!loggedIn) {
+        alert("You are currently not logged in.");
+        window.location.href = "../index.html";
+      }
     </script>
   </body>
 </html>
