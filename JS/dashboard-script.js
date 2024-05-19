@@ -213,9 +213,29 @@ function updateRankingList(scores, rankingElement) {
 
   scores.forEach((user, index) => {
     const listItem = document.createElement("li");
-    listItem.textContent = `${index + 1}. (Level ${user.examLevel}) ${
+
+    const userInfoContainer = document.createElement("div");
+    userInfoContainer.className = "user-info-container";
+
+    const nameBox = document.createElement("div");
+    nameBox.className = "name-box";
+    nameBox.textContent = `${index + 1}. (Level ${user.examLevel}) ${
       user.fullName
-    } - ${user.score}`;
+    }`;
+
+    // Create the right box for the score
+    const scoreBox = document.createElement("div");
+    scoreBox.className = "score-box";
+    scoreBox.textContent = user.score;
+
+    // Append the boxes to the container
+    userInfoContainer.appendChild(nameBox);
+    userInfoContainer.appendChild(scoreBox);
+
+    // Append the container to the list item
+    listItem.appendChild(userInfoContainer);
+
+    // Append the list item to the ranking list
     rankingElement.appendChild(listItem);
   });
 }
