@@ -61,6 +61,9 @@ async function calculateCountersAndRankings() {
     let level1Passed = 0;
     let level2Passed = 0;
     let level3Passed = 0;
+    let level1Failed = 0;
+    let level2Failed = 0;
+    let level3Failed = 0;
 
     let overallScores = [];
     let level1Scores = [];
@@ -96,6 +99,13 @@ async function calculateCountersAndRankings() {
             }
           } else {
             failed++;
+            if (exam.examLevel === "1") {
+              level1Failed++;
+            } else if (exam.examLevel === "2") {
+              level2Failed++;
+            } else if (exam.examLevel === "3") {
+              level3Failed++;
+            }
           }
         } else {
           if (timestamp < firstTakeTracker[email][exam.examLevel].timestamp) {
@@ -128,17 +138,41 @@ async function calculateCountersAndRankings() {
       });
     });
 
-    totalExam.textContent = total;
-    totalPassed.textContent = passed;
-    totalFailed.textContent = failed;
+    const overallTotal = passed + failed;
 
-    const totalPassedLevels = level1Passed + level2Passed + level3Passed;
+    const overallPassedPercentage = (passed / overallTotal) * 100;
+    const overallFailedPercentage = (failed / overallTotal) * 100;
 
-    const level1Percentage = (level1Passed / totalPassedLevels) * 100;
-    const level2Percentage = (level2Passed / totalPassedLevels) * 100;
-    const level3Percentage = (level3Passed / totalPassedLevels) * 100;
+    const level1Total = level1Passed + level1Failed;
+    const level1PassedPercentage = level1Total
+      ? (level1Passed / level1Total) * 100
+      : 0;
+    const level1FailedPercentage = level1Total
+      ? (level1Failed / level1Total) * 100
+      : 0;
 
-    const data = [level1Percentage, level2Percentage, level3Percentage];
+    const level2Total = level2Passed + level2Failed;
+    const level2PassedPercentage = level2Total
+      ? (level2Passed / level2Total) * 100
+      : 0;
+    const level2FailedPercentage = level2Total
+      ? (level2Failed / level2Total) * 100
+      : 0;
+
+    const level3Total = level3Passed + level3Failed;
+    const level3PassedPercentage = level3Total
+      ? (level3Passed / level3Total) * 100
+      : 0;
+    const level3FailedPercentage = level3Total
+      ? (level3Failed / level3Total) * 100
+      : 0;
+
+    const data = {
+      overall: [overallPassedPercentage, overallFailedPercentage],
+      level1: [level1PassedPercentage, level1FailedPercentage],
+      level2: [level2PassedPercentage, level2FailedPercentage],
+      level3: [level3PassedPercentage, level3FailedPercentage],
+    };
 
     const rankingData = {
       overall: overallScores,
@@ -150,17 +184,24 @@ async function calculateCountersAndRankings() {
     const radios = document.querySelectorAll('input[name="ranking"]');
     radios.forEach((radio) => {
       radio.addEventListener("change", (event) => {
-        updateRankingList(rankingData[event.target.value], rankingList);
+        const value = event.target.value;
+        updateRankingList(rankingData[value], rankingList);
+        updatePieChart(data[value], ["Passed", "Failed"]);
+        updateTotalCounts(
+          value === "overall" ? total : rankingData[value].length,
+          value === "overall"
+            ? passed
+            : (data[value][0] / 100) * rankingData[value].length,
+          value === "overall"
+            ? failed
+            : (data[value][1] / 100) * rankingData[value].length
+        );
       });
     });
 
     updateRankingList(overallScores, rankingList);
-
-    updatePieChart(overallPieChart, overallPieChartCtx, data, [
-      "Level 1",
-      "Level 2",
-      "Level 3",
-    ]);
+    updatePieChart(data.overall, ["Passed", "Failed"]);
+    updateTotalCounts(total, passed, failed);
   } catch (error) {
     console.error("Error retrieving data:", error);
   }
@@ -179,19 +220,19 @@ function updateRankingList(scores, rankingElement) {
   });
 }
 
-function updatePieChart(chart, context, data, labels) {
-  if (chart) {
-    chart.destroy();
+function updatePieChart(data, labels) {
+  if (overallPieChart) {
+    overallPieChart.destroy();
   }
-  chart = new Chart(context, {
+  overallPieChart = new Chart(overallPieChartCtx, {
     type: "pie",
     data: {
       labels: labels,
       datasets: [
         {
-          label: "Passed",
+          label: "Passed vs Failed",
           data: data,
-          backgroundColor: ["#ff7373", "#2757da", "#35bb23"],
+          backgroundColor: ["#35bb23", "#ff7373"],
         },
       ],
     },
@@ -203,13 +244,14 @@ function updatePieChart(chart, context, data, labels) {
         },
         title: {
           display: true,
-          text: "Percentage of Passed Exams by Level",
+          text: "Passed vs Failed",
         },
         tooltip: {
           callbacks: {
             label: function (context) {
               const label = context.label || "";
-              const value = context.raw !== undefined ? context.raw.toFixed(2) : "";
+              const value =
+                context.raw !== undefined ? context.raw.toFixed(2) : "";
               return `${label}: ${value}%`;
             },
           },
@@ -217,6 +259,13 @@ function updatePieChart(chart, context, data, labels) {
       },
     },
   });
+}
+
+function updateTotalCounts(total, passed, failed) {
+  const overallTotal = passed + failed;
+  totalExam.textContent = overallTotal;
+  totalPassed.textContent = passed;
+  totalFailed.textContent = failed;
 }
 
 calculateCountersAndRankings();
